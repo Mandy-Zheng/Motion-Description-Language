@@ -31,7 +31,6 @@ def run(filename):
     color = [0, 0, 0]
     tmp = new_matrix()
     ident( tmp )
-
     stack = [ [x[:] for x in tmp] ]
     screen = new_screen()
     zbuffer = new_zbuffer()
@@ -46,6 +45,73 @@ def run(filename):
                           'blue': [0.2, 0.5, 0.5]}]
     reflect = '.white'
 
-    print(symbols)
+    #print(stack)
+    #print(symbols)
     for command in commands:
-        print(command)
+        cmd=command['op']
+        args=command['args']
+        if cmd == "push":
+            stack.append([x[:] for x in stack[-1]])
+        elif cmd == "pop":
+            stack.pop()
+        elif cmd == "move":
+            t = make_translate(float(args[0]), float(args[1]), float(args[2]))
+            matrix_mult( stack[-1], t )
+            stack[-1] = [ x[:] for x in t]
+        elif cmd == "rotate":
+            theta = float(args[1]) * (math.pi / 180)
+            if args[0] == 'x':
+                t = make_rotX(theta)
+            elif args[0] == 'y':
+                t = make_rotY(theta)
+            else:
+                t = make_rotZ(theta)
+            matrix_mult( stack[-1], t )
+            stack[-1] = [ x[:] for x in t]
+        elif cmd == "scale":
+            t = make_scale(float(args[0]), float(args[1]), float(args[2]))
+            matrix_mult( stack[-1], t )
+            stack[-1] = [ x[:] for x in t]
+        elif cmd == "box":
+            add_box(tmp,
+                    float(args[0]), float(args[1]), float(args[2]),
+                    float(args[3]), float(args[4]), float(args[5]))
+            matrix_mult( stack[-1], tmp )
+            if command['constants']:
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, command['constants'])
+            else:
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
+            tmp = []
+        elif cmd == "sphere":
+            add_sphere(tmp,
+                       float(args[0]), float(args[1]), float(args[2]),
+                       float(args[3]), step_3d)
+            matrix_mult( stack[-1], tmp )
+            if command['constants']:
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, command['constants'])
+            else:
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
+            tmp = []
+        elif cmd == "torus":
+            add_torus(tmp,
+                      float(args[0]), float(args[1]), float(args[2]),
+                      float(args[3]), float(args[4]), step_3d)
+            matrix_mult( stack[-1], tmp )
+            if command['constants']:
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, command['constants'])
+            else:
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
+            tmp = []
+        elif cmd == "constants":
+            pass
+        elif cmd == "line":
+            add_edge( tmp,
+                      float(args[0]), float(args[1]), float(args[2]),
+                      float(args[3]), float(args[4]), float(args[5]) )
+            matrix_mult( stack[-1], tmp )
+            draw_lines(tmp, screen, zbuffer, color)
+            tmp = []
+        elif cmd == "save":
+            save_extension(screen, args[0]+".png")
+        elif cmd == "display":
+            display(screen)
