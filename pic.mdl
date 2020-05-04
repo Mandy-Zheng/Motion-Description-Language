@@ -1,24 +1,90 @@
-constants shiny_purple 0.3 0.2 0.8 0.3 0 0 0.3 0.2 0.8
-constants dull_teal 0.3 0.0 0.0 0.3 0.8 0.2 0.3 0.8 0.2
-constants dull_yellow 0.3 0.8 0.2 0.3 0.8 0.2 0 0 0
-constants shiny_black 0.1 0.1 0.8 0.1 0.1 0.8 0.1 0.1 0.8
+constants shiny_pink 1.0 1.0 0 0.3 0.8 0 0.3 0.8 0
+constants shiny_white 0.95 1.0 0 0.9 1.0 0 0.67 1.0 0
+constants shiny_red 0.88 0.88 0 0 0.2 0.2 0.2 0.2 0
+constants chocolate 0.25 0.25 0 0 0 0 0.06 0.06 0
+constants melon 0.73 0.73 0 1.0 1.0 0 0.64 0.64 0
+constants yellow 0.98 0.98 0 1.0 1.0 0 0.64 0.64 0
 push
-move 250 300 0
-scale 1.3 1.3 1.3
-sphere shiny_black 0 0 -10 30
+move 250 250 0
+rotate x 45
+scale 1 20 1
+torus shiny_pink 0 0 0 3 150
+pop
 push
+move 250 290 0
+rotate x 45
+torus shiny_pink 0 0 0 75 75
+move 0 140 0
+torus shiny_pink 0 0 0 50 50
+move 0 -10 0
+push
+scale 1 10 1
+torus shiny_pink 0 0 0 3 100
+pop
+torus shiny_white 0 0 0 3 103
+pop
+push
+move 250 250 0
+rotate x 45
+torus shiny_white 0 0 0 3 153
 move 0 50 0
-sphere shiny_purple 15 0 0 5
-line 15 0 0 0 -30 0
-sphere shiny_purple -15 0 0 5
-line -15 0 0 0 -30 0
-pop
-push
+torus shiny_white 0 0 0 3 153
 move 0 -100 0
-scale 3 5 1
-sphere shiny_black 0 0 0 20
+torus shiny_white 0 0 0 3 153
 pop
 push
-move 0 -60 -10
+move 250 290 0
+rotate x 45
+move 0 190 0
+sphere shiny_red 0 0 0 18
+pop
+push
+move 310 290 0
+rotate x 45
+move 0 190 0
+sphere chocolate 0 0 0 25
+torus shiny_white 0 0 0 3 25
+pop
+push
+move 190 290 0
+rotate x 45
+move 0 190 0
+sphere chocolate 0 0 0 25
+torus shiny_white 0 0 0 3 25
+pop
+push
+move 250 290 0
+rotate x 45
+move 0 190 60
+sphere chocolate 0 0 0 25
+rotate z 30
+torus shiny_white 0 0 0 3 25
+rotate z 300
+torus shiny_white 0 0 0 3 25
+pop
+push
+move 250 290 0
+rotate x 45
+move 0 190 -60
+sphere chocolate 0 0 0 25
+rotate z 30
+torus shiny_white 0 0 0 3 25
+rotate z 300
+torus shiny_white 0 0 0 3 25
+pop
+push
+move 250 250 225
+rotate x 45
+sphere melon 0 0 0 25
+push
+move 75 0 -25
+sphere yellow 0 0 0 25
+move 50 0 -75
+sphere melon 0 0 0 25
+pop
+move -75 0 -25
+sphere yellow 0 0 0 25
+move -50 0 -75
+sphere melon 0 0 0 25
 display
 save pic.png
